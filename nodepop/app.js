@@ -11,6 +11,7 @@ var users = require('./routes/users');
 var app = express();
 
 require("./lib/connectMongoose");
+require("./install_bd");
 require("./models/Anuncios");
 require("./models/Usuarios");
 
