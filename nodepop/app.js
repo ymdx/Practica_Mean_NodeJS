@@ -12,6 +12,7 @@ var app = express();
 
 require("./lib/connectMongoose");
 require("./models/Anuncios");
+require("./models/Usuarios");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
