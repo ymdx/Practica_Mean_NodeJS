@@ -19,8 +19,8 @@ var Anuncio = mongoose.model("Anuncio",anuncioSchema);
 // no necesitamos exportar el modelo ya que podriamos recuperarlo con:
 // var Anuncio = mongoose.model("Anuncio");
 
-const anuncio = new Anuncio({nombre: "Televisión", venta: true, precio: 201.12,
-    foto: "tele.jpg", tags: ["lifestyle"]
-});
+//const anuncio = new Anuncio({nombre: "Televisión", venta: true, precio: 201.12,
+//    foto: "tele.jpg", tags: ["lifestyle"]
+//});
 
-anuncio.save();
+//anuncio.save();
