@@ -7,9 +7,10 @@ const localConfig = require('../../config');
 
 const mongoose = require('mongoose');
 const Usuario = mongoose.model('Usuario');
+
 const jwtAuth = require('../../lib/autentificacion_jwt');
 
-router.get('/', jwtAuth, function(req, res, next) {
+router.get('/', jwtAuth, function(req, res) {
     const query = Usuario.find();
     query.exec(function(err, rows) {
         if (err) {
@@ -32,7 +33,6 @@ router.post('/registro', jwtAuth, function(req, res, next) {
         if (user) {
             return customError(req, res, 'USUARIO_EXIST_ERROR', 406);
         }
-
         const usuario = new Usuario(req.body);
         var hash = crypto.createHash('sha256').update(usuario.clave).digest('base64');
         usuario.clave = hash;
@@ -42,9 +42,7 @@ router.post('/registro', jwtAuth, function(req, res, next) {
             }
             res.status(200).json({success: true, result: usuarioGuardado});
         });
-
     });
-
 });
 
 router.post('/authenticate', function (req, res, next) {
@@ -67,5 +65,6 @@ router.post('/authenticate', function (req, res, next) {
             res.status(200).json({success: true, token});
         });
     });
+
 
 });
