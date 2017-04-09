@@ -32,7 +32,7 @@ Listado de anuncios
 
 Petición GET http://localhost:3000/apiv1/anuncios
 
-Parámetros:
+Parámetros :
 
     * nombre: el nombre del artículo empieza por los caracteres que indica este parámetro http://localhost:3000/apiv1/anuncios?nombre=ip
     * precio: filtro precio
@@ -52,5 +52,15 @@ Parámetros:
     fields: Devuelve los campos que se indiquen en este parámetro.
     * ---> http://localhost:3000/apiv1/anuncios?fields=nombre%20precio
 
-Listado de anuncios
-{ "success": true, "adverts": [ { "_id" : ObjectId("58e9354204995cbd711efb58"), "nombre" : "Bicicleta", "venta" : true, "precio" : 230.15, "foto" : "bici.jpg", "tags" : [ "lifestyle", "motor" ] }] }
+Listado de anuncios :
+    * ---> {
+	* --->    "success": true,
+	* --->    "adverts": [{
+	* --->	    "_id": ObjectId("58e9354204995cbd711efb58"),
+	* --->	    "nombre": "Bicicleta",
+	* --->	    "venta": true,
+	* --->	    "precio": 230.15,
+	* --->	    "foto": "bici.jpg",
+	* --->	    "tags": ["lifestyle", "motor"]
+	* --->    }]
+    * ---> }
