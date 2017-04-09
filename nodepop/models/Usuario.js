@@ -14,6 +14,8 @@ const usuarioSchema = mongoose.Schema({
 
 var Usuario = mongoose.model("Usuario",usuarioSchema);
 
+userSchema.index({email: 1}, { unique: true }); // schema level
+
 // no necesitamos exportar el modelo ya que podriamos recuperarlo con:
 // var Usuario = mongoose.model("Usuario");
 
