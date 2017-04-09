@@ -16,6 +16,28 @@ const anuncioSchema = mongoose.Schema({
 
 var Anuncio = mongoose.model("Anuncio",anuncioSchema);
 
+// metodo estatico :
+
+anuncioSchema.statics.list = function(filter, limit, skip, fields, sort, callback) {
+    // Filtro
+    const query = Anuncio.find(filter);
+
+    // Limite de instancias
+    query.limit(limit);
+
+    // Para saltar.
+    query.skip(skip);
+
+    // Para incluir
+    query.select(fields);
+
+    // Para ordenar
+    query.sort(sort);
+
+    // Para el callback
+    query.exec(callback);
+};
+
 // no necesitamos exportar el modelo ya que podriamos recuperarlo con:
 // var Anuncio = mongoose.model("Anuncio");
 
