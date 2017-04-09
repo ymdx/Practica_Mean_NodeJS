@@ -52,10 +52,11 @@ Parámetros :
     fields: Devuelve los campos que se indiquen en este parámetro.
     * ---> http://localhost:3000/apiv1/anuncios?fields=nombre%20precio
 
-Listado de anuncios :
+Devuelve :
+
     * ---> {
 	* --->    "success": true,
-	* --->    "adverts": [{
+	* --->    "anuncios": [{
 	* --->	    "_id": ObjectId("58e9354204995cbd711efb58"),
 	* --->	    "nombre": "Bicicleta",
 	* --->	    "venta": true,
@@ -64,3 +65,40 @@ Listado de anuncios :
 	* --->	    "tags": ["lifestyle", "motor"]
 	* --->    }]
     * ---> }
+
+# API de usuarios
+
+Crear un nuevo usuario
+
+Petición POST http://localhost:3000/apiv1/usuarios/registro
+
+Parámetros :
+
+    * nombre: campo de texto
+    * clave: campo de texto
+    * email: campo de texto
+
+Devuelve :
+
+    * ---> {
+	* --->   "success": true,
+	* --->      "usuarios": {
+	* --->	         "_id": ObjectId("58e9354204995cbd711efb5b"),
+	* --->	         "nombre": "Yoel Macia Delgado",
+	* --->	         "email": "yoel@gmail.com",
+	* --->	         "clave": "12345"
+	* --->      }
+	* ---> }
+
+Autenticar un usuario
+
+Petición POST http://localhost:3000/apiv1/usuario/authenticate
+
+Parámetros:
+
+    * clave: campo de texto
+    * email: campo de texto
+
+Devuelve:
+
+Un token válido por 1 hora
