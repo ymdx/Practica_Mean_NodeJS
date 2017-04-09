@@ -21,7 +21,7 @@ MongoClient.connect('mongodb://localhost:27017/dbnodepop',function (err,db) {
         "nombre": "Bicicleta",
         "venta": true,
         "precio": 230.15,
-        "foto": "bici.jpg",
+        "foto": "../public/images/bici.jpg",
         "tags": [ "lifestyle", "motor"]
     }
 
@@ -29,7 +29,7 @@ MongoClient.connect('mongodb://localhost:27017/dbnodepop',function (err,db) {
         "nombre": "iPhone 3GS",
         "venta": false,
         "precio": 50.00,
-        "foto": "iphone.png",
+        "foto": "../public/images/iphone3g.png",
         "tags": [ "lifestyle", "mobile"]
     }
 
@@ -37,7 +37,7 @@ MongoClient.connect('mongodb://localhost:27017/dbnodepop',function (err,db) {
         "nombre": "Pelota Futbol",
         "venta": true,
         "precio": 10.00,
-        "foto": "pelota.png",
+        "foto": "../public/images/pelota.jpg",
         "tags": [ "lifestyle"]
     }
     usuario1 = {
