@@ -1,0 +1,24 @@
+{
+  "es": {
+    "USUARIO_SIGNTOKEN_ERROR": "ERROR, el token ha sido mal generado ( has hecho mal el login )",
+    "USUARIO_CLAVE_ERROR": "ERROR, clave incorrecta",
+    "USUARIO_TOKENNOTFOUND_ERROR": "ERROR, token no encontrado",
+    "USUARIO_INVALIDO_ERROR": "ERROR, token invalido",
+    "USUARIO_ADD_ERROR": "ERROR, añadiendo un usuario nuevo",
+    "USUARIO_NOTFOUND_ERROR": "ERROR, usuario no encontrado",
+    "USUARIO_VALIDATE_ERROR": "ERROR, por favor introduce todos los datos",
+    "USUARIO_EXIST_ERROR": "ERROR, el usuario introducido ya existe",
+    "TAGS_NOTFOUND_ERROR":"ERROR, tag no encontrado"
+  },
+  "en": {
+    "USUARIO_SIGNTOKEN_ERROR": "ERROR, token didnt generate on the correct way ( wrong login )",
+    "USUARIO_CLAVE_ERROR": "ERROR, wrong pass",
+    "USUARIO_TOKENNOTFOUND_ERROR": "ERROR, token not found",
+    "USUARIO_INVALIDO_ERROR": "Invalid token",
+    "USUARIO_ADD_ERROR": "ERROR, adding new user",
+    "USUARIO_NOTFOUND_ERROR": "ERROR, user not found",
+    "USUARIO_VALIDATE_ERROR": "ERROR, please fill all of our data-fields",
+    "USUARIO_EXIST_ERROR": "ERROR, the user you entered already exists",
+    "TAGS_NOTFOUND_ERROR":"ERROR, tag not found"
+  }
+}
