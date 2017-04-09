@@ -1,65 +1,71 @@
-
-"use strict";
-
 const express = require('express');
 const router = express.Router();
 
-const sha256 = require('sha256');
+var crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-
-const customError = require('../../lib/customError');
-const config = require('../../config');
+const localConfig = require('../../config');
 
 const mongoose = require('mongoose');
 const Usuario = mongoose.model('Usuario');
+const jwtAuth = require('../../lib/autentificacion_jwt');
 
-router.post("/", function(req, res, next) {
-    const nombre = req.body.nombre;
-    const email = req.body.email;
-    const clave = req.body.clave;
-
-    const usuario = new Usuario({
-        nombre: nombre,
-        email: email,
-        clave: sha256(clave)
-    });
-
-    Usuario.save(function(err, usuario) {
-        if(err) {
-            if (err.code === 11000) {
-                return customError(req, res, 'USUARIO_EXIST_ERROR', 400);
-            } else if (err.name === "ValidationError") {
-                return customError(req, res, 'USUARIO_VALIDATE_ERROR', 400);
-            } else {
-                return customError(req, res, 'USUARIO_ADD_ERROR');
-            }
+router.get('/', jwtAuth, function(req, res, next) {
+    const query = Usuario.find();
+    query.exec(function(err, rows) {
+        if (err) {
+            return customError(req, res, 'INTERNAL_ERROR', 500);
         }
-        res.json({success: true, usuario: usuario});
+        res.json({success: true, result: rows});
     });
 
 });
 
-router.post("/authenticate", function(req, res, next) {
-    const email = req.body.email;
-    const clave = req.body.clave;
+router.post('/registro', jwtAuth, function(req, res, next) {
+    console.log(req.body);
 
-    Usuario.findOne({email: email}).exec(function(err, user) {
+    const email = req.body.email;
+
+    Usuario.findOne({email: email}).exec(function (err, user) {
         if (err) {
-            return next(err);
+            return customError(req, res, 'INTERNAL_ERROR', 500);
         }
-        if(!usuario) {
-            return customError(req, res, 'USUARIO_NOTFOUND_ERROR', 401);
+        if (user) {
+            return customError(req, res, 'USUARIO_EXIST_ERROR', 406);
         }
-        if(!clave || usuario.clave !== sha256(clave)) {
+
+        const usuario = new Usuario(req.body);
+        var hash = crypto.createHash('sha256').update(usuario.clave).digest('base64');
+        usuario.clave = hash;
+        usuario.save(function(err, usuarioGuardado) {
+            if (err) {
+                return customError(req, res, 'USUARIO_VALIDATE_ERROR', 406);
+            }
+            res.status(200).json({success: true, result: usuarioGuardado});
+        });
+
+    });
+
+});
+
+router.post('/authenticate', function (req, res, next) {
+    const email = req.body.email;
+    const clave = crypto.createHash('sha256').update(req.body.clave).digest('base64');
+
+    Usuario.findOne({email: email}).exec(function (err, user) {
+        if (err) {
+            return customError(req, res, 'INTERNAL_ERROR', 500);
+        }
+        if (!user) {
+            return customError(req, res, 'USUARIO_NOTFOUND_ERROR', 404);
+        }
+        if (clave !== user.clave) {
             return customError(req, res, 'USUARIO_CLAVE_ERROR', 401);
         }
-        jwt.sign({email: email}, config.jwt.PASS, {expiresIn: config.jwt.TIEMPO_PASS}, function(err, token) {
-            if(err) {
-                return customError(req, res, 'USUARIO_SIGNTOKEN_ERROR');
-            }
-            res.json({success: true, token: token});
+        jwt.sign({ user_id: user._id}, localConfig.jwt.secret, {
+            expiresIn: localConfig.jwt.expiresIn
+        }, function(err, token) {
+            res.status(200).json({success: true, token});
         });
     });
-});
 
-module.exports = router;
+});

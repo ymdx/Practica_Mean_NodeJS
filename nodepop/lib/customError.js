@@ -25,9 +25,10 @@ module.exports = function(req, res, codigoError, status) {
         // Si tenemos errores
 
         if (err) {
-            console.log("Can not load error descriptions " + config.ERRORES, err);
+            console.log("No puedo el json de errores" + config.ERRORES, err);
             return;
         }
+
         // Parseamos el json
 
         const mensajesError = JSON.parse(data);
