@@ -48,6 +48,7 @@ router.get("/", function (req,res,next) {
     }
     if(precio) {
         const separador = precio.split('-');
+
         if (separador.length === 2) {
             if (separador[0] == "") {
                 filter.precio = {'$lte': separador[1]}
@@ -67,20 +68,42 @@ router.get("/", function (req,res,next) {
     const fields = req.query.fields;
     const sort = req.query.sort;
 
-    Anuncio.list(filter, limit, skip, fields, sort, function(err, rows) {
+    // Anuncio.list(filter, limit, skip, fields, sort, function(err, rows) {
+    //     if (err) {
+    //             return customError(req, res, 'ANUNCIO_REQ_ERROR', 400);
+    //     }
+    //     rows.forEach(function(row) {
+    //         row.foto = url.format({
+    //             protocol: req.protocol,
+    //             host: req.get('host'),
+    //             pathname: "/public/images/anuncios/" + row.foto
+    //         });
+    //     });
+    //     res.status(200).json({success: true, result: rows});
+    // });
+
+});
+
+router.get('/tags', function (req, res) {
+
+    const query = Anuncio.find();
+    query.select('tags');
+
+    query.exec(function(err, rows) {
         if (err) {
-                return customError(req, res, 'ANUNCIO_REQ_ERROR', 400);
+            return customError(req, res, 'INTERNAL_ERROR', 500);
         }
-        rows.forEach(function(row) {
-            row.foto = url.format({
-                protocol: req.protocol,
-                host: req.get('host'),
-                pathname: "/public/images/anuncios/" + row.foto
+
+        const tags = [];
+        rows.forEach((row) => {
+            row.tags.forEach(function(tag) {
+                if (tags.indexOf(tag) === -1) {
+                    tags.push(tag);
+                }
             });
         });
-        res.status(200).json({success: true, result: rows});
+        res.status(200).json({success: true, result: tags});
     });
-
 });
 
 router.get('/:id', function(req, res, next) {
@@ -135,17 +158,6 @@ router.delete('/:id', function(req, res, next) {
         res.json({success: true});
     });
 });
-
-router.get('/tags', function(req, res, next) {
-    Anuncio.distinct('tags', function(err, tags) {
-        if(err) {
-            return customError(req, res, 'TAGS_NOTFOUND_ERROR');
-        }
-        res.json({success: true, tags});
-    });
-});
-
-
 
 module.exports = router;
 
