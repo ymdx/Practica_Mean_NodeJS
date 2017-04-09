@@ -52,11 +52,7 @@ Parámetros :
     fields: Devuelve los campos que se indiquen en este parámetro.
     * ---> http://localhost:3000/apiv1/anuncios?fields=nombre%20precio
 
-<<<<<<< HEAD
 Devuelve :
-=======
-Listado de anuncios :
->>>>>>> origin/master
 
     * ---> {
 	* --->    "success": true,
